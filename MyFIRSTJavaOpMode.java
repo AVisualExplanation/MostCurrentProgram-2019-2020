@@ -37,7 +37,7 @@ Linear Acceleration Vector, and Gravity as specified by "https://www.adafruit.co
 Driver Station that tells the driver station that this class is Autonomous. The parameters for the "@Autonomous" are name and group. The name
 parameter is what this class will show up as to the phone. The group parameter is going to be autonomous.
  */
-// UWU "what's this?" *snaps yow necky wecky*
+
 // (Created by "Samuel Tukua","24/09/2018", "#1", "This is just the establishing code or the first run of the robot", "NEEDEDIT for the counts per motor rev and the like variables")
 @Autonomous(name="AutoOPGyroFacingDepot", group="Autonomous")
 public class MyFIRSTJavaOpMode extends LinearOpMode {
