@@ -83,7 +83,7 @@ public class HardwarePushbot
         rightDrive = hwMap.get(DcMotor.class, "right_drive");
         midDrive = hwMap.get(DcMotor.class, "mid_drive");
         liftnLower = hwMap.get(DcMotor.class, "lift_lower");
-        mineralCollection =hwMap.get(Servo.class,"Mineral_Collection");
+        mineralCollection = hwMap.get(Servo.class,"Mineral_Collection");
 
 
         leftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors

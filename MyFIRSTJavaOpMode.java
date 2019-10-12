@@ -57,12 +57,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     private final double WHEEL_DIAMETER_INCHES = 3.54331;                                               // For figuring circumference
     private final double COUNTS_PER_INCH_WHEELS = (COUNTS_PER_MOTOR_REV_WHEELS * DRIVE_GEAR_REDUCTION) /          //Because the motor measures its rotations in "counts", this translates those counts by answering "how many counts should the motor go in order to move the wheel by one inch".
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    private final double COUNTS_PER_MOTOR_REV_LIFTNLOWER = 288;                                     // This is needed because the linear slide has a different motor count from the wheels.
-    private final double LIFTNLOWER_DIAMETER = 1.0 ;
-    private final double COUNTS_PER_INCH_LIFTNLOWER = (COUNTS_PER_MOTOR_REV_LIFTNLOWER * DRIVE_GEAR_REDUCTION) /
-            (LIFTNLOWER_DIAMETER * 3.1415);
     private final double DRIVE_SPEED = 0.6;                                                         // Nominal speed for better accuracy.
-    private final double DROP_SPEED = 0.4;                                                          //This was created as a precaution to ensure that the robot didn't drop down too quickly
     private final double TURN_SPEED = 0.3;                                                          // Nominal half speed for better accuracy.
 
 
@@ -74,7 +69,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         oppreborn.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                  //Naturally when the robot is pushed while its wheels are set to zero power, the robot
         oppreborn.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                 //wheels will spin. This means that another robot would be able to push the robot out
         oppreborn.liftnLower.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                 //of the way. Setting the ZeroPowerBehavior() to "BRAKE" means that when the wheels
-                                                                                                    //are given a power value of "0" then they will both stop and actively resist movement.
+                                                                                        //are given a power value of "0" then they will both stop and actively resist movement.
         //Encoder Wheels
         oppreborn.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);                        //This stops the left drive if it was moving and then resets the encoder
         oppreborn.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);                       //This stops the right drive if it was moving and then resets the encoder
@@ -90,25 +85,17 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         imu.initialize(parameters);                                                                 //This initializes the parameters (moves the parameters specified to be associated with the imu)
 
         waitForStart();
-        Dismount();
-/*
+
         IMUDrive(DRIVE_SPEED,3,0);
         IMUDrive(DRIVE_SPEED, 50, 90);
         IMUDrive(DRIVE_SPEED,47,135);
-        PlaceMarker();
-        IMUDrive(DRIVE_SPEED,78,-45);*/
+        IMUDrive(DRIVE_SPEED,78,-45);
 
         // imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);                  //This starts the integration (integral calculus) processes for the acceleration.
         telemetry.addData("Path", "Complete");                                        //This sends the driver station phone the message that the robot has completed all of its necessary paths
         telemetry.update();
     }
 
-
-    /******************************************************************
-     public void SampleArea() {
-     //This method is just being created in order to serve as a reminder of future work.
-     }
-     *********************************************************************/
 
 
 
@@ -181,17 +168,6 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
 
     }
 
-
-    /*This just commands the motor/servo that has the sole purpose of putting down the marker*/
-    private void PlaceMarker() {
-    oppreborn.mineralCollection.setPosition(Range.clip(0.5,0,1));
-    sleep(500);
-    idle();
-}
-
-
-
-
     //(Created by "Samuel Tukua","26/09/2018", "edit #5", "Finished the rotate method, but still need to check it", "NEEDEDIT checking that the thirdangle is the one that I want to use")
     private void Rotate(double dsrangle) {                                             //This method will be called upon in order to rotate the rover using the gyro
         if (opModeIsActive()) {
@@ -206,13 +182,13 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
                 return;
             }
             if (angles.firstAngle > dsrangle) {                                                          //This checks to see if the current angle is greater than the desired angle, "dsrangle", and if so, it will tell the robot that it needs to Rotate until the angles are equal
-                while (angles.firstAngle > dsrangle && opModeIsActive()) {                                                   //This stops when the current angle equals the desired angle or if the current time exceeds the 30 seconds that the match is allowed to take.
-                    angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                    telemetry.log();
-                    oppreborn.leftDrive.setPower(TURN_SPEED);                                       //This rotation results in the rover turning in a clockwise fashion which in euclidean angles means that it's rotation is approaching -180 degrees.
-                    oppreborn.rightDrive.setPower(-TURN_SPEED);
-                    sleep(50);
-                }
+                    while (angles.firstAngle > dsrangle && opModeIsActive()) {                                                   //This stops when the current angle equals the desired angle or if the current time exceeds the 30 seconds that the match is allowed to take.
+                        angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                        telemetry.log();
+                        oppreborn.leftDrive.setPower(TURN_SPEED);                                       //This rotation results in the rover turning in a clockwise fashion which in euclidean angles means that it's rotation is approaching -180 degrees.
+                        oppreborn.rightDrive.setPower(-TURN_SPEED);
+                        sleep(50);
+                    }
                     oppreborn.leftDrive.setPower(0);                                                    //This makes sure that the wheels have stopped spinning once the robot has finished its rotation
                     oppreborn.rightDrive.setPower(0);
             } else if (angles.firstAngle < dsrangle) {                                                   //This checks to see if the current angle is less than the desired angle, "dsrangle", and if so, it will tell the robot that it needs to Rotate until the angles are equal.
@@ -248,42 +224,4 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         return adjustment;                                                                          //This return statement means that the method "AdjustOrientation(angle)" will return the required amount of adjustment to be added to the wheels.
     }
 
-
-    /**
-     * private double[] RoverFromHit(){
-     * while (opModeIsActive() && duration<timeoutmilli){
-     * "get current acceleration";
-     * "get expected acceleration"//you could create getter and setter threads that always keep track of
-     * if (( "current_acceleration>expected_acceleration+0.1")
-     * (|| "current acceleration>wheel acceleration: You will need to know whether the robot ")
-     * while "";}
-     * double[] recoverinstruct =new double[5];
-     * recoverinstruct[0]=1.0;
-     * return recoverinstruct;
-     * }
-     */
-    private void Dismount() {
-
-        oppreborn.liftnLower.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        oppreborn.liftnLower.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        runtime.reset();
-        while (opModeIsActive() && runtime.milliseconds()<4100) {
-            oppreborn.liftnLower.setPower(0.6);
-            idle();
-        }
-        oppreborn.liftnLower.setPower(0);
-        sleep(1000);
-        runtime.reset();
-        while (opModeIsActive() && runtime.milliseconds()<300) {
-            oppreborn.midDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            oppreborn.midDrive.setPower(.7);
-            idle();
-        }
-        oppreborn.midDrive.setPower(0);
-        oppreborn.midDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void setAngles(Orientation angles) {
-        this.angles = angles;
-    }
 }
