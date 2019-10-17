@@ -14,11 +14,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @TeleOp(name="lowercaseFrankTeleOp", group="TeleOP")
 class lowercaseFrankTeleOp extends OpMode {
+    boolean Tankmode = false;
     private HardwarePushbot lowercaseFrank = new HardwarePushbot();
 
     @Override
     public void init() {
-        boolean Tankmode = true;
         lowercaseFrank.init(hardwareMap);
         lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
