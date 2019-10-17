@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MostCurrentProgram; //This declares that this class is located within the team code folder of the ftc folder
+/*package org.firstinspires.ftc.teamcode.MostCurrentProgram; //This declares that this class is located within the team code folder of the ftc folder
 
 import com.qualcomm.hardware.bosch.BNO055IMU; //This imports the required information for running the IMU and allowing it to recognize it
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;//This imports the autonomous reference to allow the driver station to recognize it as such
@@ -39,7 +39,7 @@ parameter is what this class will show up as to the phone. The group parameter i
  */
 
 // (Created by "Samuel Tukua","24/09/2018", "#1", "This is just the establishing code or the first run of the robot", "NEEDEDIT for the counts per motor rev and the like variables")
-@Autonomous(name="AutoOPGyroFacingDepot", group="Autonomous")
+/*@Autonomous(name="AutoOPGyroFacingDepot", group="Autonomous")
 public class MyFIRSTJavaOpMode extends LinearOpMode {
     private HardwarePushbot oppreborn = new HardwarePushbot();
     private BNO055IMU imu;
@@ -51,7 +51,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     of this code is to simply set the initial parameters of the IMU and to calibrate it. Parts of this were adapted from
     " http://stemrobotics.cs.pdx.edu/node/7265 "
      */
-    private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();                           //This creates a new instance of the parameters
+  /*  private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();                           //This creates a new instance of the parameters
     private final double COUNTS_PER_MOTOR_REV_WHEELS = 2240;                                               //Different motors will spin at different rates even when the same amount of power is applied. These are identified as counts. For example, Tetrix motors have 1440 counts for every single rotation/revolution.
     private final double DRIVE_GEAR_REDUCTION = 1.0;                                                // This is < 1.0 if geared UP. This has to do with how the motors are connected to the wheels. If it is a direct connection then there is no gear up. But, if there are gears in between then the wheel will likely not rotate at the same rate as the motor. This accounts for that.
     private final double WHEEL_DIAMETER_INCHES = 3.54331;                                               // For figuring circumference
@@ -104,7 +104,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
       or counter clockwise until it matches the angle depending on whether the degrees input was 0 to +180 (counter clockwise)
       or 0 to -180 (clockwise). Finally, it uses the encoders within the wheel motors
       to go a desired distance forward while continually checking that it is in a straight line.*/
-    private void IMUDrive(double speed, double inches, double angle) {
+    /*private void IMUDrive(double speed, double inches, double angle) {
         Rotate(angle);
         int newLeftTarget;
         int newRightTarget;
