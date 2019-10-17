@@ -33,6 +33,9 @@ class lowercaseFrankTeleOp extends OpMode {
             Tankmode = false;
         } else if (gamepad1.right_stick_button == true) {
             Tankmode = true;
+        if (Tankmode == true) {
+            lowercaseFrank.leftDrive.setPower(gamepad1.left_stick_y + gamepad1.right_stick_y/2);
+            lowercaseFrank.rightDrive.setPower(gamepad1.left_stick_x + gamepad1.right_stick_y/2);
         }
     }
         lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .7);
