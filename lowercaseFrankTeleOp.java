@@ -18,6 +18,7 @@ class lowercaseFrankTeleOp extends OpMode {
 
     @Override
     public void init() {
+        boolean Tankmode = true;
         lowercaseFrank.init(hardwareMap);
         lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -27,8 +28,13 @@ class lowercaseFrankTeleOp extends OpMode {
     public void loop() {
         updateDrive();
     }
-
-    private synchronized void updateDrive() {
+    public synchronized void updateDrive() {
+        if (gamepad1.left_stick_button == true) {
+            Tankmode = false;
+        } else if (gamepad1.right_stick_button == true) {
+            Tankmode = true;
+        }
+    }
         lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .7);
         lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .7);
     }
