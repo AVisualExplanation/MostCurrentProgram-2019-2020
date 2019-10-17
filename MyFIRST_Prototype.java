@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MostCurrentProgram;
+/*package org.firstinspires.ftc.teamcode.MostCurrentProgram;
 import  org.firstinspires.ftc.teamcode.MostCurrentProgram.HardwarePushbot;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -145,7 +145,7 @@ public class MyFIRST_Prototype extends OpMode {
 
 
     /*This just commands the motor/servo that has the sole purpose of putting down the marker*/
-    private void mineralCollection() {
+ /*   private void mineralCollection() {
         oppreborn.mineralCollection.setPosition(.5);
     }
 
@@ -245,7 +245,7 @@ public class MyFIRST_Prototype extends OpMode {
 
     });
     */
-    private synchronized void Dismount() throws InterruptedException {
+  /*  private synchronized void Dismount() throws InterruptedException {
         oppreborn.liftnLower.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         oppreborn.liftnLower.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         oppreborn.liftnLower.setPower(0.6);
@@ -259,3 +259,4 @@ public class MyFIRST_Prototype extends OpMode {
 
 }
 
+*/
