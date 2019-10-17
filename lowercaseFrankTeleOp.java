@@ -12,8 +12,9 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@TeleOp(name="lowercaseFrankTeleOp", group="TeleOP")
-class lowercaseFrankTeleOp extends OpMode {
+@TeleOp(name="lowercaseFrankTeleOp", group="TeleOp")
+public class lowercaseFrankTeleOp extends OpMode {
+    boolean Frankmode = false;
     private HardwarePushbot lowercaseFrank = new HardwarePushbot();
 
     @Override
@@ -29,8 +30,28 @@ class lowercaseFrankTeleOp extends OpMode {
     }
 
     private synchronized void updateDrive() {
-        lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .7);
-        lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .7);
+        if (gamepad1.right_stick_button==true){
+              Frankmode=true;
+        }
+        else if (gamepad1.left_stick_button==true){
+            Frankmode=false;
+        }
+        if (Frankmode==true){
+            lowercaseFrank.rightDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
+            lowercaseFrank.leftDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
+            if (gamepad1.dpad_left==true){
+                lowercaseFrank.rightDrive.setPower(.5);
+                lowercaseFrank.leftDrive.setPower(-.5);
+            }
+            if (gamepad1.dpad_right==true){
+                lowercaseFrank.rightDrive.setPower(-.5);
+                lowercaseFrank.leftDrive.setPower(.5);
+            }
+        }
+        if (Frankmode==false) {
+            lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .7);
+            lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .7);
+        }
     }
 
 }
