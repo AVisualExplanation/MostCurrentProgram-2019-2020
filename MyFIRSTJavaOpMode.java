@@ -99,7 +99,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
 
 
 
-    /*This is the method that drives the rover forward at any desired angle relative to the rover's current angle.
+    /*This i the method that drives the rover forward at any desired angle relative to the rover's current angle.
       it does this by first finding its current orientation and then turns either clockwise
       or counter clockwise until it matches the angle depending on whether the degrees input was 0 to +180 (counter clockwise)
       or 0 to -180 (clockwise). Finally, it uses the encoders within the wheel motors
