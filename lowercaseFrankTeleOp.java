@@ -26,7 +26,7 @@ public class lowercaseFrankTeleOp extends OpMode {
 
     @Override
     public void loop() {
-        Updatespin();
+        updateDrive();
     }
 
     private synchronized void Updatespin() {
@@ -34,7 +34,7 @@ public class lowercaseFrankTeleOp extends OpMode {
             lowercaseFrank.rightDrive.setPower(.75);
             lowercaseFrank.leftDrive.setPower(-.75);
             try {
-                wait(30000);
+                wait(8000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -43,7 +43,7 @@ public class lowercaseFrankTeleOp extends OpMode {
             lowercaseFrank.rightDrive.setPower(1);
             lowercaseFrank.leftDrive.setPower(-1);
             try {
-                wait(30000);
+                wait(8000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -52,7 +52,7 @@ public class lowercaseFrankTeleOp extends OpMode {
             lowercaseFrank.rightDrive.setPower(.5);
             lowercaseFrank.leftDrive.setPower(-.5);
             try {
-                wait(30000);
+                wait(8000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -61,7 +61,7 @@ public class lowercaseFrankTeleOp extends OpMode {
             lowercaseFrank.rightDrive.setPower(.25);
             lowercaseFrank.leftDrive.setPower(-.25);
             try {
-                wait(30000);
+                wait(8000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -70,7 +70,7 @@ public class lowercaseFrankTeleOp extends OpMode {
         }
 
 
-    private synchronized void updateDrive() {
+    public synchronized void updateDrive() {
         if (gamepad1.right_stick_button==true){
               Frankmode=true;
         }
@@ -78,20 +78,20 @@ public class lowercaseFrankTeleOp extends OpMode {
             Frankmode=false;
         }
         if (Frankmode==true){
-            lowercaseFrank.rightDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
-            lowercaseFrank.leftDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
+            lowercaseFrank.leftDrive.setPower((-(gamepad1.right_stick_y+gamepad1.left_stick_y)*.9)/2);
+            lowercaseFrank.rightDrive.setPower((-(gamepad1.right_stick_y+gamepad1.left_stick_y)*.9)/2);
             if (gamepad1.dpad_left==true){
-                lowercaseFrank.rightDrive.setPower(.5);
-                lowercaseFrank.leftDrive.setPower(-.5);
+                lowercaseFrank.rightDrive.setPower(.8);
+                lowercaseFrank.leftDrive.setPower(-.8);
             }
             if (gamepad1.dpad_right==true){
-                lowercaseFrank.rightDrive.setPower(-.5);
-                lowercaseFrank.leftDrive.setPower(.5);
+                lowercaseFrank.rightDrive.setPower(-.8);
+                lowercaseFrank.leftDrive.setPower(.8);
             }
         }
         if (Frankmode==false) {
-            lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .7);
-            lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .7);
+            lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .9);
+            lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .9);
         }
     }
 
