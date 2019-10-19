@@ -74,4 +74,3 @@ public class lowercaseFrankTeleOp extends OpMode {
         lowercaseFrank.mineralCollection.setPosition(Range.clip(NewPosition, 0, 1));
 
     }*/
-/* hello, this is a test change */ 
