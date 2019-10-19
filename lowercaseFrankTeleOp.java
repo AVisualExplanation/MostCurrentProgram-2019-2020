@@ -26,10 +26,62 @@ public class lowercaseFrankTeleOp extends OpMode {
 
     @Override
     public void loop() {
-        Updatespin();
+        updateDrive();
     }
 
-    private synchronized void Updatespin() {
+
+
+
+    private synchronized void updateDrive() {
+        if (gamepad1.right_stick_button==true){
+              Frankmode=true;
+        }
+        else if (gamepad1.left_stick_button==true){
+            Frankmode=false;
+        }
+        if (Frankmode==true){
+            lowercaseFrank.rightDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
+            lowercaseFrank.leftDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
+            if (gamepad1.dpad_left==true){
+                lowercaseFrank.rightDrive.setPower(.5);
+                lowercaseFrank.leftDrive.setPower(-.5);
+            }
+            if (gamepad1.dpad_right==true){
+                lowercaseFrank.rightDrive.setPower(-.5);
+                lowercaseFrank.leftDrive.setPower(.5);
+            }
+        }
+        if (Frankmode==false) {
+            lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .7);
+            lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .7);
+        }
+    }
+
+}
+
+
+
+
+/* DO NOT DELETE REFERENCE HERE!!!!!
+    private synchronized void updateServo() {
+        double NewPosition;
+        double CurrentPosition = lowercaseFrank.mineralCollection.getPosition();
+        //if (CurrentPosition == 1.0 || CurrentPosition == 0.0){
+       //     return;
+       // }
+        if (gamepad2.right_stick_button){
+            NewPosition = CurrentPosition + .00125;
+        } else if (gamepad2.left_stick_button) {
+            NewPosition = CurrentPosition -.00125 ;
+        }
+        else {
+            NewPosition = CurrentPosition;
+        }
+        lowercaseFrank.mineralCollection.setPosition(Range.clip(NewPosition, 0, 1));
+
+    }*/
+
+/* private synchronized void updateSpin() {
         if (gamepad1.x==true) {
             lowercaseFrank.rightDrive.setPower(.75);
             lowercaseFrank.leftDrive.setPower(-.75);
@@ -66,52 +118,4 @@ public class lowercaseFrankTeleOp extends OpMode {
                 e.printStackTrace();
             }
         }
-
-        }
-
-
-    private synchronized void updateDrive() {
-        if (gamepad1.right_stick_button==true){
-              Frankmode=true;
-        }
-        else if (gamepad1.left_stick_button==true){
-            Frankmode=false;
-        }
-        if (Frankmode==true){
-            lowercaseFrank.rightDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
-            lowercaseFrank.leftDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
-            if (gamepad1.dpad_left==true){
-                lowercaseFrank.rightDrive.setPower(.5);
-                lowercaseFrank.leftDrive.setPower(-.5);
-            }
-            if (gamepad1.dpad_right==true){
-                lowercaseFrank.rightDrive.setPower(-.5);
-                lowercaseFrank.leftDrive.setPower(.5);
-            }
-        }
-        if (Frankmode==false) {
-            lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .7);
-            lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .7);
-        }
-    }
-
-}
-
-/* DO NOT DELETE REFERENCE HERE!!!!!
-    private synchronized void updateServo() {
-        double NewPosition;
-        double CurrentPosition = lowercaseFrank.mineralCollection.getPosition();
-        //if (CurrentPosition == 1.0 || CurrentPosition == 0.0){
-       //     return;
-       // }
-        if (gamepad2.right_stick_button){
-            NewPosition = CurrentPosition + .00125;
-        } else if (gamepad2.left_stick_button) {
-            NewPosition = CurrentPosition -.00125 ;
-        }
-        else {
-            NewPosition = CurrentPosition;
-        }
-        lowercaseFrank.mineralCollection.setPosition(Range.clip(NewPosition, 0, 1));
-
-    }*/
+*/

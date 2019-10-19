@@ -1,21 +1,18 @@
-/*package org.firstinspires.ftc.teamcode.MostCurrentProgram; //This declares that this class is located within the team code folder of the ftc folder
+package org.firstinspires.ftc.teamcode.MostCurrentProgram; //This declares that this class is located within the team code folder of the ftc folder
 
 import com.qualcomm.hardware.bosch.BNO055IMU; //This imports the required information for running the IMU and allowing it to recognize it
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;//This imports the autonomous reference to allow the driver station to recognize it as such
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode; //This imports the methods found within LineaOpMode so that they can be used here
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 
-import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-import java.sql.Driver;
 
 /**
  ***IMPORTANT READ***
@@ -39,9 +36,9 @@ parameter is what this class will show up as to the phone. The group parameter i
  */
 
 // (Created by "Samuel Tukua","24/09/2018", "#1", "This is just the establishing code or the first run of the robot", "NEEDEDIT for the counts per motor rev and the like variables")
-/*@Autonomous(name="AutoOPGyroFacingDepot", group="Autonomous")
+@Autonomous(name="AutoOPGyroFacingDepot", group="Autonomous")
 public class MyFIRSTJavaOpMode extends LinearOpMode {
-    private HardwarePushbot oppreborn = new HardwarePushbot();
+    private HardwarePushbot lowercaseFrank = new HardwarePushbot();
     private BNO055IMU imu;
     private Orientation angles;
     private ElapsedTime runtime = new ElapsedTime();
@@ -51,28 +48,26 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     of this code is to simply set the initial parameters of the IMU and to calibrate it. Parts of this were adapted from
     " http://stemrobotics.cs.pdx.edu/node/7265 "
      */
- /*   private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();                           //This creates a new instance of the parameters
+    private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();                           //This creates a new instance of the parameters
     private final double COUNTS_PER_MOTOR_REV_WHEELS = 2240;                                               //Different motors will spin at different rates even when the same amount of power is applied. These are identified as counts. For example, Tetrix motors have 1440 counts for every single rotation/revolution.
     private final double DRIVE_GEAR_REDUCTION = 1.0;                                                // This is < 1.0 if geared UP. This has to do with how the motors are connected to the wheels. If it is a direct connection then there is no gear up. But, if there are gears in between then the wheel will likely not rotate at the same rate as the motor. This accounts for that.
     private final double WHEEL_DIAMETER_INCHES = 3.54331;                                               // For figuring circumference
     private final double COUNTS_PER_INCH_WHEELS = (COUNTS_PER_MOTOR_REV_WHEELS * DRIVE_GEAR_REDUCTION) /          //Because the motor measures its rotations in "counts", this translates those counts by answering "how many counts should the motor go in order to move the wheel by one inch".
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    private final double DRIVE_SPEED = 0.6;                                                         // Nominal speed for better accuracy.
     private final double TURN_SPEED = 0.3;                                                          // Nominal half speed for better accuracy.
 
 
     @Override
     public void runOpMode() throws InterruptedException {                                                          //runOpMode() is where all of the information for actually running the op mode goes. This is what is called when the big white button that says "init" on it is pressed.
-        oppreborn.init(hardwareMap);
+        lowercaseFrank.init(hardwareMap);
 
         // (Created by "Samuel Tukua","26/09/2018", "edit #2", "This changes the Zero Power Mode to resist being pushed", "NEEDEDIT for results of this change")
-        oppreborn.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                  //Naturally when the robot is pushed while its wheels are set to zero power, the robot
-        oppreborn.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                 //wheels will spin. This means that another robot would be able to push the robot out
-        oppreborn.liftnLower.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                 //of the way. Setting the ZeroPowerBehavior() to "BRAKE" means that when the wheels
+        lowercaseFrank.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                  //Naturally when the robot is pushed while its wheels are set to zero power, the robot
+        lowercaseFrank.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                 //wheels will spin. This means that another robot would be able to push the robot out
                                                                                         //are given a power value of "0" then they will both stop and actively resist movement.
         //Encoder Wheels
-        oppreborn.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);                        //This stops the left drive if it was moving and then resets the encoder
-        oppreborn.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);                       //This stops the right drive if it was moving and then resets the encoder
+        lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);                        //This stops the left drive if it was moving and then resets the encoder
+        lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);                       //This stops the right drive if it was moving and then resets the encoder
         //IMU Gyro
         // (Created by "Samuel Tukua","26/09/2018", "edit #3", "This puts the IMU into sensor mode rather than keeping it in config mode", "NEEDEDIT for results of this change")
         parameters.mode = BNO055IMU.SensorMode.IMU;                                                 //This puts the IMU into sensor mode as opposed to config mode
@@ -86,17 +81,29 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
 
         waitForStart();
 
-        IMUDrive(DRIVE_SPEED,3,0);
-        IMUDrive(DRIVE_SPEED, 50, 90);
-        IMUDrive(DRIVE_SPEED,47,135);
-        IMUDrive(DRIVE_SPEED,78,-45);
+        Rotate(90,.75);
+        wait(1000);
+        Rotate(80,.5);
 
         // imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);                  //This starts the integration (integral calculus) processes for the acceleration.
         telemetry.addData("Path", "Complete");                                        //This sends the driver station phone the message that the robot has completed all of its necessary paths
         telemetry.update();
     }
+    private synchronized void Rotate(double degrees, double power){
+        lowercaseFrank.leftDrive.setPower(power);
+        lowercaseFrank.rightDrive.setPower(-power);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < Rotatetime(degrees,power)*1000)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+        lowercaseFrank.leftDrive.setPower(0);
+        lowercaseFrank.rightDrive.setPower(0);
+    }
 
-//oh my gosh
+    private synchronized double Rotatetime(double degrees, double power){
+        return((degrees)/((1.3646*(Math.pow(10,7))*Math.pow(power,1.47891))-(1.3645*(Math.pow(10,7))*(Math.pow(power,1.47893)))));
+    }
 
 
     /*This i the method that drives the rover forward at any desired angle relative to the rover's current angle.
@@ -104,113 +111,112 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
       or counter clockwise until it matches the angle depending on whether the degrees input was 0 to +180 (counter clockwise)
       or 0 to -180 (clockwise). Finally, it uses the encoders within the wheel motors
       to go a desired distance forward while continually checking that it is in a straight line.*/
- /*   private void IMUDrive(double speed, double inches, double angle) {
-        Rotate(angle);
+    private void IMUDrive(double speed, double inches, double angle) {
+        IMURotate(angle);
         int newLeftTarget;
         int newRightTarget;
         if (opModeIsActive()) {
 
-            oppreborn.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            oppreborn.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = oppreborn.leftDrive.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_WHEELS); //This gets the wheels current position, and adds the number of inches forward desired. But, remember that the rover moves in terms of counts, so it translates the number of inches into the number of counts.
-            newRightTarget = oppreborn.rightDrive.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_WHEELS);
-            oppreborn.leftDrive.setTargetPosition(newLeftTarget);                                   //This sets the new target equal to the distance defined above in terms of counts
-            oppreborn.rightDrive.setTargetPosition(newRightTarget);
+            newLeftTarget = lowercaseFrank.leftDrive.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_WHEELS); //This gets the wheels current position, and adds the number of inches forward desired. But, remember that the rover moves in terms of counts, so it translates the number of inches into the number of counts.
+            newRightTarget = lowercaseFrank.rightDrive.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_WHEELS);
+            lowercaseFrank.leftDrive.setTargetPosition(newLeftTarget);                                   //This sets the new target equal to the distance defined above in terms of counts
+            lowercaseFrank.rightDrive.setTargetPosition(newRightTarget);
 
             // Turn On RUN_TO_POSITION
-            oppreborn.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);                           //This makes the motors both begin to drive to their desired position as defined below.
-            oppreborn.rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);                           //This makes the motors both begin to drive to their desired position as defined below.
+            lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
-            oppreborn.leftDrive.setPower(Math.abs(speed));                                          //This sets the wheel speed equal to the speed defined before
-            oppreborn.rightDrive.setPower(Math.abs(speed));
-            oppreborn.midDrive.setPower(0);
+            lowercaseFrank.leftDrive.setPower(Math.abs(speed));                                          //This sets the wheel speed equal to the speed defined before
+            lowercaseFrank.rightDrive.setPower(Math.abs(speed));
 
             while (opModeIsActive() &&
-                    (oppreborn.leftDrive.isBusy() || oppreborn.rightDrive.isBusy())){
+                    (lowercaseFrank.leftDrive.isBusy() || lowercaseFrank.rightDrive.isBusy())){
 
                 double adjustment = Math.abs(AdjustOrientation(angle));                                       //This calls upon the AdjustOrientation() function defined below.
                 if (angles.firstAngle > angle) {                                                    //This checks to see if the current angle is greater than the desired angle in turns of euclidean angles if this is true, then the speed of the left wheel will increase causing the robot to speed up by the increment of adjustment
-                    oppreborn.leftDrive.setPower(Math.abs(speed + adjustment));
-                    oppreborn.rightDrive.setPower(Math.abs(speed - adjustment));
+                    lowercaseFrank.leftDrive.setPower(Math.abs(speed + adjustment));
+                    lowercaseFrank.rightDrive.setPower(Math.abs(speed - adjustment));
                 }
                 else if (angles.firstAngle < angle) {                                               //This does the same as the previous if statement, but for turning to the right
-                    oppreborn.rightDrive.setPower(Math.abs(speed + adjustment));
-                    oppreborn.leftDrive.setPower(Math.abs(speed - adjustment));
+                    lowercaseFrank.rightDrive.setPower(Math.abs(speed + adjustment));
+                    lowercaseFrank.leftDrive.setPower(Math.abs(speed - adjustment));
                 }
                 else {
-                    oppreborn.leftDrive.setPower(speed);
-                    oppreborn.rightDrive.setPower(speed);
+                    lowercaseFrank.leftDrive.setPower(speed);
+                    lowercaseFrank.rightDrive.setPower(speed);
                 }
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
                 telemetry.addData("Path2", "Running at %7d :%7d",
-                        (int)(oppreborn.leftDrive.getCurrentPosition()/COUNTS_PER_INCH_WHEELS),
-                        (int) (oppreborn.rightDrive.getCurrentPosition()/COUNTS_PER_INCH_WHEELS));
+                        (int)(lowercaseFrank.leftDrive.getCurrentPosition()/COUNTS_PER_INCH_WHEELS),
+                        (int) (lowercaseFrank.rightDrive.getCurrentPosition()/COUNTS_PER_INCH_WHEELS));
                 telemetry.addData("adjustment","at %7d", (int)(adjustment*1000));
-                telemetry.addData("speeds", "left: %7d and right %7d", (int)(oppreborn.leftDrive.getPower()*1000),(int)(oppreborn.leftDrive.getPower()*1000) );
+                telemetry.addData("speeds", "left: %7d and right %7d", (int)(lowercaseFrank.leftDrive.getPower()*1000),(int)(lowercaseFrank.leftDrive.getPower()*1000) );
                 telemetry.update();
                 idle();
             }
 
             // Stop all motion;
-            oppreborn.leftDrive.setPower(0);
-            oppreborn.rightDrive.setPower(0);
-            oppreborn.midDrive.setPower(0);
+            lowercaseFrank.leftDrive.setPower(0);
+            lowercaseFrank.rightDrive.setPower(0);
+
 
             // Turn off RUN_TO_POSITION
-            oppreborn.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            oppreborn.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
     }
 
     //(Created by "Samuel Tukua","26/09/2018", "edit #5", "Finished the rotate method, but still need to check it", "NEEDEDIT checking that the thirdangle is the one that I want to use")
-    private void Rotate(double dsrangle) {                                             //This method will be called upon in order to rotate the rover using the gyro
+    private void IMURotate(double dsrangle) {                                             //This method will be called upon in order to rotate the rover using the gyro
         if (opModeIsActive()) {
             angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            oppreborn.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            oppreborn.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             if ( !(angles.firstAngle >= dsrangle-5 && angles.firstAngle <= dsrangle+5 )) {
-                oppreborn.leftDrive.setPower(0);
-                oppreborn.rightDrive.setPower(0);
-                oppreborn.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                oppreborn.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                lowercaseFrank.leftDrive.setPower(0);
+                lowercaseFrank.rightDrive.setPower(0);
+                lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 return;
             }
             if (angles.firstAngle > dsrangle) {                                                          //This checks to see if the current angle is greater than the desired angle, "dsrangle", and if so, it will tell the robot that it needs to Rotate until the angles are equal
                     while (angles.firstAngle > dsrangle && opModeIsActive()) {                                                   //This stops when the current angle equals the desired angle or if the current time exceeds the 30 seconds that the match is allowed to take.
                         angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                         telemetry.log();
-                        oppreborn.leftDrive.setPower(TURN_SPEED);                                       //This rotation results in the rover turning in a clockwise fashion which in euclidean angles means that it's rotation is approaching -180 degrees.
-                        oppreborn.rightDrive.setPower(-TURN_SPEED);
+                        lowercaseFrank.leftDrive.setPower(TURN_SPEED);                                       //This rotation results in the rover turning in a clockwise fashion which in euclidean angles means that it's rotation is approaching -180 degrees.
+                        lowercaseFrank.rightDrive.setPower(-TURN_SPEED);
                         sleep(50);
                     }
-                    oppreborn.leftDrive.setPower(0);                                                    //This makes sure that the wheels have stopped spinning once the robot has finished its rotation
-                    oppreborn.rightDrive.setPower(0);
+                    lowercaseFrank.leftDrive.setPower(0);                                                    //This makes sure that the wheels have stopped spinning once the robot has finished its rotation
+                    lowercaseFrank.rightDrive.setPower(0);
             } else if (angles.firstAngle < dsrangle) {                                                   //This checks to see if the current angle is less than the desired angle, "dsrangle", and if so, it will tell the robot that it needs to Rotate until the angles are equal.
                 while (angles.firstAngle < dsrangle && opModeIsActive()) {                                                   //This setup does the  same as the previous setup but instead does it in a counter clockwise fashion in order to rotate the robot towards the positive 180 degrees section
                     angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                    oppreborn.leftDrive.setPower(-TURN_SPEED);
-                    oppreborn.rightDrive.setPower(TURN_SPEED);
+                    lowercaseFrank.leftDrive.setPower(-TURN_SPEED);
+                    lowercaseFrank.rightDrive.setPower(TURN_SPEED);
                     telemetry.addData("Rotation at", "%7d of %7d", Math.round(angles.firstAngle), Math.round(dsrangle));
                     telemetry.update();
                     sleep(50);
                     }
                 }
-                    oppreborn.leftDrive.setPower(0);
-                    oppreborn.rightDrive.setPower(0);
+                    lowercaseFrank.leftDrive.setPower(0);
+                    lowercaseFrank.rightDrive.setPower(0);
             } else {                                                  //This checks to see if the current angle is equal to the desired angle, "dsrangle", and if so, it will just move on to the next method
-            oppreborn.leftDrive.setPower(0);
-            oppreborn.rightDrive.setPower(0);
+            lowercaseFrank.leftDrive.setPower(0);
+            lowercaseFrank.rightDrive.setPower(0);
             telemetry.addData("Robot Orientation", "Correctly at " + dsrangle);
             telemetry.update();                                                         //This essentially just ends the loop early
         }
-            oppreborn.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            oppreborn.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             telemetry.addData("Robot Orientation", "Correctly at " + dsrangle);       //This displays on the driver station that the robot is correctly oriented at the given angle
             telemetry.update();
         }
@@ -224,4 +230,4 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         return adjustment;                                                                          //This return statement means that the method "AdjustOrientation(angle)" will return the required amount of adjustment to be added to the wheels.
     }
 
-}*/
+}
