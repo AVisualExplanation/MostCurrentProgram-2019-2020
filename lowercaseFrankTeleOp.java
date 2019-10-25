@@ -29,7 +29,7 @@ public class lowercaseFrankTeleOp extends OpMode {
         Updatespin();
     }
 
-    private synchronized void Updatespin() {
+     private synchronized void Updatespin() {
         if (gamepad1.x==true) {
             lowercaseFrank.rightDrive.setPower(.75);
             lowercaseFrank.leftDrive.setPower(-.75);
