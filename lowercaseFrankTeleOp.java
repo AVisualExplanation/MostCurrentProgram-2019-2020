@@ -16,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class lowercaseFrankTeleOp extends OpMode {
     boolean Frankmode = false;
     private HardwarePushbot lowercaseFrank = new HardwarePushbot();
+    private double power;
 
     @Override
     public void init() {
@@ -94,6 +95,18 @@ public class lowercaseFrankTeleOp extends OpMode {
             lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .9);
         }
     }
+
+
+
+
+
+
+
+    }
+
+
+
+
 
 }
 
