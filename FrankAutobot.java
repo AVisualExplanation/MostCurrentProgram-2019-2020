@@ -27,7 +27,7 @@ public class FrankAutoBot extends OpMode {
     }
 
 }
-
+/* Establishing the motors*/
      DcMotor left_drive = null;
      DcMotor right_drive = null;
 
