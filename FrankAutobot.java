@@ -14,7 +14,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 public class FrankAutoBot extends OpMode {
-     /* Declaring motors */
+     /* Fetching/stating/getting the motors.
+       Right motor is stated as "right_drive", and left motor is "left_drive"*/
+
+
 
     public DcMotor getLeft_drive() {
         return left_drive; }
