@@ -105,7 +105,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         lowercaseFrank.rightDrive.setPower(0);
     }
 
-    private synchronized double Rotatetime(double degrees, double power){
+    private double Rotatetime(double degrees, double power){
         return((degrees)/((1.3646*(Math.pow(10,7))*Math.pow(power,1.47891))-(1.3645*(Math.pow(10,7))*(Math.pow(power,1.47893)))));
     }
 
