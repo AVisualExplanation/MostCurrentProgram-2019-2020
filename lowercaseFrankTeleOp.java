@@ -30,43 +30,9 @@ public class lowercaseFrankTeleOp extends OpMode {
     }
 
 
-<<<<<<< Updated upstream
-
-
-    private synchronized void updateDrive() {
-        if (gamepad1.right_stick_button==true){
-              Frankmode=true;
-        }
-        else if (gamepad1.left_stick_button==true){
-            Frankmode=false;
-        }
-        if (Frankmode==true){
-            lowercaseFrank.rightDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
-            lowercaseFrank.leftDrive.setPower(((gamepad1.right_stick_y+gamepad1.left_stick_y)*.7)/2);
-=======
-      public void updateDrive() {
-            lowercaseFrank.leftDrive.setPower((-(gamepad1.right_stick_y+gamepad1.left_stick_y)*.9)/2);
-            lowercaseFrank.rightDrive.setPower((-(gamepad1.right_stick_y+gamepad1.left_stick_y)*.9)/2);
->>>>>>> Stashed changes
-            if (gamepad1.dpad_left==true){
-                lowercaseFrank.rightDrive.setPower(.5);
-                lowercaseFrank.leftDrive.setPower(-.5);
-            }
-            if (gamepad1.dpad_right==true){
-                lowercaseFrank.rightDrive.setPower(-.5);
-                lowercaseFrank.leftDrive.setPower(.5);
-            }
-<<<<<<< Updated upstream
-        }
-        if (Frankmode==false) {
-            lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .7);
-            lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .7);
-        }
-=======
-
-            lowercaseFrank.rightDrive.setPower((-gamepad1.right_stick_y) * .9);
-            lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .9);
->>>>>>> Stashed changes
+    private void updateDrive() {
+            lowercaseFrank.rightDrive.setPower((gamepad1.right_stick_y) * .9);
+            lowercaseFrank.leftDrive.setPower((gamepad1.left_stick_y) * .9);
     }
 
 }
