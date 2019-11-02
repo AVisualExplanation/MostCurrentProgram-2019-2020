@@ -28,6 +28,7 @@
 
 package org.firstinspires.ftc.teamcode.MostCurrentProgram;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -57,6 +58,7 @@ public class HardwarePushbot
     /* Public OpMode members. */
     public DcMotor  leftDrive   = null;
     public DcMotor  rightDrive  = null;
+    BNO055IMU imu;
     //public DcMotor midDrive = null;
     //public DcMotor  liftnLower  = null;
     //public Servo mineralCollection = null;
@@ -77,8 +79,14 @@ public class HardwarePushbot
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
         hwMap = ahwMap;
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = true;
+        parameters.loggingTag          = "IMU";
 
         // Define and Initialize Motors
+        imu = hwMap.get(BNO055IMU.class, "imu");
         leftDrive  = hwMap.get(DcMotor.class, "left_drive");
         rightDrive = hwMap.get(DcMotor.class, "right_drive");
         //midDrive = hwMap.get(DcMotor.class, "mid_drive");
@@ -93,22 +101,15 @@ public class HardwarePushbot
 
         leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                            //Naturally when the robot is pushed while its wheels are set to zero power, the robot
         rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                           //wheels will spin. This means that another robot would be able to push the robot out
-        //midDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        //liftnLower.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                           //of the way. Setting the ZeroPowerBehavior() to "BRAKE" means that when the wheels
         //are given a power value of "0" then they will both stop and actively resist movement.
 
 
         // Set all motors to zero power
         leftDrive.setPower(0);
         rightDrive.setPower(0);
-        //midDrive.setPower(0);
         //mineralCollection.setPosition(Range.clip(.4,0,1));
-        //liftnLower.setPower(0);
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //liftnLower.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 }
