@@ -30,48 +30,48 @@ public class lowercaseFrankTeleOp extends OpMode {
         updateDrive();
     }
 
-     private synchronized void Updatespin() {
-        if (gamepad1.x==true) {
-            lowercaseFrank.rightDrive.setPower(.75);
-            lowercaseFrank.leftDrive.setPower(-.75);
-            try {
-                wait(8000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        if (gamepad1.y==true){
-            lowercaseFrank.rightDrive.setPower(1);
-            lowercaseFrank.leftDrive.setPower(-1);
-            try {
-                wait(8000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        if (gamepad1.a==true) {
-            lowercaseFrank.rightDrive.setPower(.5);
-            lowercaseFrank.leftDrive.setPower(-.5);
-            try {
-                wait(8000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        if (gamepad1.b==true) {
-            lowercaseFrank.rightDrive.setPower(.25);
-            lowercaseFrank.leftDrive.setPower(-.25);
-            try {
-                wait(8000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+     private void Updatespin() {
+         if (gamepad1.x == true) {
+             lowercaseFrank.rightDrive.setPower(.75);
+             lowercaseFrank.leftDrive.setPower(-.75);
+             try {
+                 wait(8000);
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             }
+         }
+         if (gamepad1.y == true) {
+             lowercaseFrank.rightDrive.setPower(1);
+             lowercaseFrank.leftDrive.setPower(-1);
+             try {
+                 wait(8000);
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             }
+         }
+         if (gamepad1.a == true) {
+             lowercaseFrank.rightDrive.setPower(.5);
+             lowercaseFrank.leftDrive.setPower(-.5);
+             try {
+                 wait(8000);
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             }
+         }
+         if (gamepad1.b == true) {
+             lowercaseFrank.rightDrive.setPower(.25);
+             lowercaseFrank.leftDrive.setPower(-.25);
+             try {
+                 wait(8000);
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             }
+         }
+     }
 
-        }
 
 
-    public synchronized void updateDrive() {
+      public void updateDrive() {
         if (gamepad1.right_stick_button==true){
               Frankmode=true;
         }
@@ -95,20 +95,10 @@ public class lowercaseFrankTeleOp extends OpMode {
             lowercaseFrank.leftDrive.setPower((-gamepad1.left_stick_y) * .9);
         }
     }
-
-
-
-
-
-
-
-    }
-
-
-
-
-
 }
+
+
+
 
 /* DO NOT DELETE REFERENCE HERE!!!!!
     private synchronized void updateServo() {
@@ -128,3 +118,42 @@ public class lowercaseFrankTeleOp extends OpMode {
         lowercaseFrank.mineralCollection.setPosition(Range.clip(NewPosition, 0, 1));
 
     }*/
+
+/* private synchronized void updateSpin() {
+        if (gamepad1.x==true) {
+            lowercaseFrank.rightDrive.setPower(.75);
+            lowercaseFrank.leftDrive.setPower(-.75);
+            try {
+                wait(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if (gamepad1.y==true){
+            lowercaseFrank.rightDrive.setPower(1);
+            lowercaseFrank.leftDrive.setPower(-1);
+            try {
+                wait(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if (gamepad1.a==true) {
+            lowercaseFrank.rightDrive.setPower(.5);
+            lowercaseFrank.leftDrive.setPower(-.5);
+            try {
+                wait(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if (gamepad1.b==true) {
+            lowercaseFrank.rightDrive.setPower(.25);
+            lowercaseFrank.leftDrive.setPower(-.25);
+            try {
+                wait(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+*/
