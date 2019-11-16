@@ -42,14 +42,27 @@ public class lowercaseFrankTeleOp extends OpMode {
     @Override
     public void loop() {
         updateDrive();
+        updateIntake();
         telemetry.update();
     }
 
 
     private void updateDrive() {
-            lowercaseFrank.rightDrive.setPower(-(gamepad1.right_stick_y) * .9);
-            lowercaseFrank.leftDrive.setPower(-(gamepad1.left_stick_y) * .9);
+        lowercaseFrank.rightDrive.setPower((gamepad1.right_stick_y) * .9);
+        lowercaseFrank.leftDrive.setPower((gamepad1.left_stick_y) * .9);
     }
+
+    private void updateIntake() {
+        if (gamepad1.right_trigger>0) {
+            lowercaseFrank.blake.setPower((gamepad1.right_trigger)*.9);
+            lowercaseFrank.drake.setPower((gamepad1.right_trigger)*.9);
+        }
+        else if (gamepad1.left_trigger>0){
+            lowercaseFrank.blake.setPower(-(gamepad1.left_trigger)*.9);
+            lowercaseFrank.drake.setPower(-(gamepad1.left_trigger)*.9);
+        }
+    }
+
 
     void composeTelemetry() {
 

@@ -56,9 +56,11 @@ import com.qualcomm.robotcore.util.Range;
 public class HardwarePushbot
 {
     /* Public OpMode members. */
-    public DcMotor  leftDrive   = null;
-    public DcMotor  rightDrive  = null;
-    BNO055IMU imu;
+    public DcMotor leftDrive   = null;
+    public DcMotor rightDrive  = null;
+    public DcMotor blake = null; //blake is the left intake (portmanteau)
+    public DcMotor drake = null; // drake is the right intake (portmanteau)
+    public BNO055IMU imu;
     //public DcMotor midDrive = null;
     //public DcMotor  liftnLower  = null;
     //public Servo mineralCollection = null;
@@ -89,27 +91,36 @@ public class HardwarePushbot
         imu = hwMap.get(BNO055IMU.class, "imu");
         leftDrive  = hwMap.get(DcMotor.class, "left_drive");
         rightDrive = hwMap.get(DcMotor.class, "right_drive");
-        //midDrive = hwMap.get(DcMotor.class, "mid_drive");
-        //liftnLower = hwMap.get(DcMotor.class, "lift_lower");
+        blake = hwMap.get(DcMotor.class, "bleft_intake");
+        drake = hwMap.get(DcMotor.class, "dright_intake");
         //mineralCollection = hwMap.get(Servo.class,"Mineral_Collection");
 
 
-        leftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
-        //midDrive.setDirection(DcMotor.Direction.REVERSE);
-        //liftnLower.setDirection(DcMotor.Direction.FORWARD);
+        leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        blake.setDirection(DcMotor.Direction.FORWARD);
+        drake.setDirection(DcMotor.Direction.REVERSE);
+
 
         leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                            //Naturally when the robot is pushed while its wheels are set to zero power, the robot
         rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                           //wheels will spin. This means that another robot would be able to push the robot out
+        blake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        drake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
         //are given a power value of "0" then they will both stop and actively resist movement.
 
 
         // Set all motors to zero power
         leftDrive.setPower(0);
         rightDrive.setPower(0);
+        drake.setPower(0);
+        blake.setPower(0);
         //mineralCollection.setPosition(Range.clip(.4,0,1));
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        blake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        drake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 }
