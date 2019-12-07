@@ -28,6 +28,7 @@ public class FrankOtterbot extends LinearOpMode {
     private final double COUNTS_PER_MOTOR_REV_WHEELS = 288;                                               //Different motors will spin at different rates even when the same amount of power is applied. These are identified as counts. For example, Tetrix motors have 1440 counts for every single rotation/revolution.
     private final double DRIVE_GEAR_REDUCTION = 1.0;                                                // This is < 1.0 if geared UP. This has to do with how the motors are connected to the wheels. If it is a direct connection then there is no gear up. But, if there are gears in between then the wheel will likely not rotate at the same rate as the motor. This accounts for that.
     private final double WHEEL_DIAMETER_INCHES = 3.54331;                                               // For figuring circumference
+
     private final double COUNTS_PER_INCH_WHEELS = (COUNTS_PER_MOTOR_REV_WHEELS * DRIVE_GEAR_REDUCTION) /          //Because the motor measures its rotations in "counts", this translates those counts by answering "how many counts should the motor go in order to move the wheel by one inch".
             (WHEEL_DIAMETER_INCHES * 3.1415);
     Orientation angles;
@@ -47,10 +48,10 @@ public class FrankOtterbot extends LinearOpMode {
         composeTelemetry();
 
         waitForStart();
-        IMUDrive(.7,12,0);
-        IMUDrive(.7,12,90);
-        IMUDrive(.7,12,-179.9);
-        IMUDrive(.7,12,-90);
+        IMUDrive(.7,-12,0);
+        IMUDrive(.7,-12,90);
+        IMUDrive(.7,-12,-179.9);
+        IMUDrive(.7,-12,-90);
 
     }
 
@@ -71,8 +72,8 @@ public class FrankOtterbot extends LinearOpMode {
             lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);                           //This makes the motors both begin to drive to their desired position as defined below.
             lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            lowercaseFrank.leftDrive.setPower(Math.abs(-speed));                                          //This sets the wheel speed equal to the speed defined before
-            lowercaseFrank.rightDrive.setPower(Math.abs(-speed));
+            lowercaseFrank.leftDrive.setPower(Math.abs(speed));                                          //This sets the wheel speed equal to the speed defined before
+            lowercaseFrank.rightDrive.setPower(Math.abs(speed));
 
             while (opModeIsActive() &&
                     (lowercaseFrank.leftDrive.isBusy() || lowercaseFrank.rightDrive.isBusy())){
