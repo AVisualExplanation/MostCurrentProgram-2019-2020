@@ -96,6 +96,22 @@ public class lowercaseFrankTeleOp extends OpMode {
 
     }
 
+    private synchronized void updateServo() {
+        double NewPosition;
+        double CurrentPosition = lowercaseFrank.liftandLower.getPosition();
+        if (CurrentPosition == 1.0 || CurrentPosition == 0.0) {
+            return;
+        }
+        if (gamepad2.right_stick_button) {
+            NewPosition = CurrentPosition + .00125;
+        } else if (gamepad2.left_stick_button) {
+            NewPosition = CurrentPosition - .00125;
+        } else {
+            NewPosition = CurrentPosition;
+        }
+        lowercaseFrank.liftandLower.setPosition(Range.clip(NewPosition, 0, 1));
+    }
+
     String formatAngle( double angle) {
         return formatDegrees(angle);
     }
@@ -106,27 +122,6 @@ public class lowercaseFrankTeleOp extends OpMode {
 
 }
 
-
-
-
-/* DO NOT DELETE REFERENCE HERE!!!!!
-    private synchronized void updateServo() {
-        double NewPosition;
-        double CurrentPosition = lowercaseFrank.mineralCollection.getPosition();
-        //if (CurrentPosition == 1.0 || CurrentPosition == 0.0){
-       //     return;
-       // }
-        if (gamepad2.right_stick_button){
-            NewPosition = CurrentPosition + .00125;
-        } else if (gamepad2.left_stick_button) {
-            NewPosition = CurrentPosition -.00125 ;
-        }
-        else {
-            NewPosition = CurrentPosition;
-        }
-        lowercaseFrank.mineralCollection.setPosition(Range.clip(NewPosition, 0, 1));
-
-    }*/
 
 /* private synchronized void updateSpin() {
         if (gamepad1.x==true) {

@@ -25,7 +25,7 @@ public class FrankOtterbot extends LinearOpMode {
     private HardwarePushbot lowercaseFrank = new HardwarePushbot();
     double DRIVE_POWER = .7;
     double TURN_SPEED = .4;
-    private final double COUNTS_PER_MOTOR_REV_WHEELS = 2240;                                               //Different motors will spin at different rates even when the same amount of power is applied. These are identified as counts. For example, Tetrix motors have 1440 counts for every single rotation/revolution.
+    private final double COUNTS_PER_MOTOR_REV_WHEELS = 288;                                               //Different motors will spin at different rates even when the same amount of power is applied. These are identified as counts. For example, Tetrix motors have 1440 counts for every single rotation/revolution.
     private final double DRIVE_GEAR_REDUCTION = 1.0;                                                // This is < 1.0 if geared UP. This has to do with how the motors are connected to the wheels. If it is a direct connection then there is no gear up. But, if there are gears in between then the wheel will likely not rotate at the same rate as the motor. This accounts for that.
     private final double WHEEL_DIAMETER_INCHES = 3.54331;                                               // For figuring circumference
     private final double COUNTS_PER_INCH_WHEELS = (COUNTS_PER_MOTOR_REV_WHEELS * DRIVE_GEAR_REDUCTION) /          //Because the motor measures its rotations in "counts", this translates those counts by answering "how many counts should the motor go in order to move the wheel by one inch".
@@ -47,14 +47,52 @@ public class FrankOtterbot extends LinearOpMode {
         composeTelemetry();
 
         waitForStart();
+        IMUDrive(.7,12,0);
+        IMUDrive(.7,12,90);
+        IMUDrive(.7,12,-179.9);
+        IMUDrive(.7,12,-90);
 
     }
 
     private void IMUDrive(double speed, double inches, double wangle) {
         IMURotate(wangle);
+        int newLeftTarget;
+        int newRightTarget;
+        if (opModeIsActive()) {
+            lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+            newLeftTarget = lowercaseFrank.leftDrive.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_WHEELS); //This gets the wheels current position, and adds the number of inches forward desired. But, remember that the rover moves in terms of counts, so it translates the number of inches into the number of counts.
+            newRightTarget = lowercaseFrank.rightDrive.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH_WHEELS);
+
+            lowercaseFrank.leftDrive.setTargetPosition(newLeftTarget);                                   //This sets the new target equal to the distance defined above in terms of counts
+            lowercaseFrank.rightDrive.setTargetPosition(newRightTarget);
+
+            lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);                           //This makes the motors both begin to drive to their desired position as defined below.
+            lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            lowercaseFrank.leftDrive.setPower(Math.abs(-speed));                                          //This sets the wheel speed equal to the speed defined before
+            lowercaseFrank.rightDrive.setPower(Math.abs(-speed));
+
+            while (opModeIsActive() &&
+                    (lowercaseFrank.leftDrive.isBusy() || lowercaseFrank.rightDrive.isBusy())){
+                continue;
+            }
+
+            // Stop all motion;
+            lowercaseFrank.leftDrive.setPower(0);
+            lowercaseFrank.rightDrive.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            lowercaseFrank.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lowercaseFrank.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
-
+/* The angles is fetching the direction/ what degrees the robot is at.
+crangle is acronym for "current angle" and wangle is an acronym for "wanted angle."
+The nrotate formula calculates the distance traveling over the positive and negative barrier. This subtracts 180 from the absolute value of a crangle added to 180 minus the absolute value of wangle.
+The trotate formula shows the degree of the path that the robot would regularly take. Taking the nrotate route is faster than taking the trotate route.
+ */
     private void IMURotate(double wangle) {
         telemetry.update();
         angles = lowercaseFrank.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);

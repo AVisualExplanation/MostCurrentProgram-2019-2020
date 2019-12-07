@@ -61,9 +61,8 @@ public class HardwarePushbot
     public DcMotor blake = null; //blake is the left intake (portmanteau)
     public DcMotor drake = null; // drake is the right intake (portmanteau)
     public BNO055IMU imu;
+    public Servo  liftandLower  = null;
     //public DcMotor midDrive = null;
-    //public DcMotor  liftnLower  = null;
-    //public Servo mineralCollection = null;
     //public DcMotor  leftArm     = null;
 
 
@@ -91,8 +90,9 @@ public class HardwarePushbot
         imu = hwMap.get(BNO055IMU.class, "imu");
         leftDrive  = hwMap.get(DcMotor.class, "left_drive");
         rightDrive = hwMap.get(DcMotor.class, "right_drive");
-        blake = hwMap.get(DcMotor.class, "bleft_intake");
-        drake = hwMap.get(DcMotor.class, "dright_intake");
+        blake = hwMap.get(DcMotor.class, "blake");
+        drake = hwMap.get(DcMotor.class, "drake");
+        liftandLower = hwMap.get(Servo.class, "liftandLower");
         //mineralCollection = hwMap.get(Servo.class,"Mineral_Collection");
 
 
@@ -100,7 +100,6 @@ public class HardwarePushbot
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         blake.setDirection(DcMotor.Direction.FORWARD);
         drake.setDirection(DcMotor.Direction.REVERSE);
-
 
         leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                            //Naturally when the robot is pushed while its wheels are set to zero power, the robot
         rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);                           //wheels will spin. This means that another robot would be able to push the robot out
@@ -116,11 +115,10 @@ public class HardwarePushbot
         rightDrive.setPower(0);
         drake.setPower(0);
         blake.setPower(0);
-        //mineralCollection.setPosition(Range.clip(.4,0,1));
+        liftandLower.setPosition(Range.clip(0,0,1));
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         blake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
     }
 }
