@@ -56,10 +56,10 @@ public class FrankOtterbotBluRi extends LinearOpMode {
         lowercaseFrank.blake.setPower(.9);
         lowercaseFrank.drake.setPower(.9);
         IMUDrive(.7,60,0);
-        IMUDrive(.7,-36,0);
+        IMUDrive(.7,-33,0);
         lowercaseFrank.blake.setPower(0);
         lowercaseFrank.drake.setPower(0);
-        IMUDrive(.7,56,90);
+        IMUDrive(.7,44,90);
         lowercaseFrank.blake.setPower(-.9);
         lowercaseFrank.drake.setPower(-.9);
         IMUDrive(.7,-20,90);
